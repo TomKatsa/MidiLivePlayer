@@ -14,4 +14,6 @@ public:
 	MidiHandle(UINT deviceId = 0);
 	~MidiHandle();
 
+	HMIDIOUT getHandle();
+
 };

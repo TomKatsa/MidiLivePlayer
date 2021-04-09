@@ -1,17 +1,16 @@
 #include <iostream>
 #include <string>
-#include "midihandle.h"
+#include "mididevice.h"
 #include "exceptions.h"
 
 int main()
 {
     try {
-        MidiHandle dev1;
-        MidiHandle dev2(2);
+        MidiDevice device;
         std::cout << "Hello World!\n";
     }
 
-    catch (MidiHandleException e) {
+    catch (MidiException e) {
         std::cout << "Caught exception: " << e.ErrorString() << std::endl;
     }
 

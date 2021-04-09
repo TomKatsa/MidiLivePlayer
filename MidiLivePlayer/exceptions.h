@@ -1,12 +1,12 @@
 #include <Windows.h>
 #include <vector>
 
-class MidiHandleException {
+class MidiException {
 private:
 	MMRESULT err;
 
 public:
-	MidiHandleException(MMRESULT err = MMSYSERR_ERROR) : err(err) {};
+	MidiException(MMRESULT err = MMSYSERR_ERROR) : err(err) {};
 
 	std::string ErrorString() {
 		std::vector<char> buffer(256);

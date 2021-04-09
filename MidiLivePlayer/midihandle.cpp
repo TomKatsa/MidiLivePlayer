@@ -5,20 +5,24 @@ MidiHandle::MidiHandle(UINT deviceId) {
 	MMRESULT err = midiOutOpen(&this->device, deviceId, NULL, 0, CALLBACK_NULL);
 
 	if (err != MMSYSERR_NOERROR) {
-		throw MidiHandleException(err);
+		throw MidiException(err);
 	}
 
-	PRINT("MidiHandle created" << std::endl);
+	LOG("MidiHandle created" << std::endl);
 }
 
 MidiHandle::~MidiHandle() {
 	if (midiOutReset(this->device) != MMSYSERR_NOERROR) {
-		PRINT("[*] midiOutReset failed");
+		LOG("[*] midiOutReset failed");
 	}
 
 	if (midiOutClose(this->device) != MMSYSERR_NOERROR) {
-		PRINT("[*] midiOutReset failed");
+		LOG("[*] midiOutReset failed");
 	}
 
-	PRINT("MidiHandle destroyed" << std::endl);
+	LOG("MidiHandle destroyed" << std::endl);
+}
+
+HMIDIOUT MidiHandle::getHandle() {
+	return device;
 }
