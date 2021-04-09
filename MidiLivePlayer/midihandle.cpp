@@ -1,17 +1,17 @@
-#include "mididevice.h"
+#include "midihandle.h"
 #include "exceptions.h"
 
-MidiDevice::MidiDevice(UINT deviceId) {
+MidiHandle::MidiHandle(UINT deviceId) {
 	MMRESULT err = midiOutOpen(&this->device, deviceId, NULL, 0, CALLBACK_NULL);
 
 	if (err != MMSYSERR_NOERROR) {
-		throw MidiDeviceException(err);
+		throw MidiHandleException(err);
 	}
 
-	PRINT("MidiDevice created" << std::endl);
+	PRINT("MidiHandle created" << std::endl);
 }
 
-MidiDevice::~MidiDevice() {
+MidiHandle::~MidiHandle() {
 	if (midiOutReset(this->device) != MMSYSERR_NOERROR) {
 		PRINT("[*] midiOutReset failed");
 	}
@@ -20,5 +20,5 @@ MidiDevice::~MidiDevice() {
 		PRINT("[*] midiOutReset failed");
 	}
 
-	PRINT("MidiDevice destroyed" << std::endl);
+	PRINT("MidiHandle destroyed" << std::endl);
 }

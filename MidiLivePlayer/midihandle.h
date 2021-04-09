@@ -5,13 +5,13 @@
 #include <iostream>
 #include "debugprint.h"
 
-class MidiDevice {
+class MidiHandle {
 
 private:
 	HMIDIOUT device;
 
 public:
-	MidiDevice(UINT deviceId = 0);
-	~MidiDevice();
+	MidiHandle(UINT deviceId = 0);
+	~MidiHandle();
 
 };

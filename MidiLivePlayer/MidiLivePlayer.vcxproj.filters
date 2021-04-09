@@ -18,18 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mididevice.cpp">
+    <ClCompile Include="midihandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mididevice.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="debugprint.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="exceptions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midihandle.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
