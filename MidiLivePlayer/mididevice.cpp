@@ -2,8 +2,10 @@
 #include "exceptions.h"
 
 MidiDevice::MidiDevice(UINT deviceId) {
-	if (midiOutOpen(&this->device, deviceId, NULL, 0, CALLBACK_NULL) != MMSYSERR_NOERROR) {
-		throw MidiDeviceException();
+	MMRESULT err = midiOutOpen(&this->device, deviceId, NULL, 0, CALLBACK_NULL);
+
+	if (err != MMSYSERR_NOERROR) {
+		throw MidiDeviceException(err);
 	}
 
 	PRINT("MidiDevice created" << std::endl);
