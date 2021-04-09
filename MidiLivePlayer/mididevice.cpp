@@ -1,20 +1,28 @@
 #include <Windows.h>
 #include <chrono>
 #include <thread>
+#include <future>
 #include "mididevice.h"
 #include "exceptions.h"
 
-MidiDevice::MidiDevice(uint8_t volume, uint8_t duration, uint8_t instrument, uint8_t deviceId)
+MidiDevice::MidiDevice(uint8_t volume, uint32_t duration, uint8_t instrument, uint8_t deviceId)
 	: volume(volume), duration(duration), deviceHandle(deviceId), channel(0) {
 
 	SetInstrument(instrument);
 	LOG("MidiDevice created " << this << std::endl);
 }
 
+
+
 void MidiDevice::PlayNote(uint8_t note) {
 	SendMidiMsg(NotePack(note, volume));
 	std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 	SendMidiMsg(NotePack(note, 0));
+}
+
+void MidiDevice::PlayNoteAsync(uint8_t note) {
+	LOG("Dispatching thread for PlayNoteAsync" << std::endl);
+	std::thread(&MidiDevice::PlayNote, this, note).detach();
 }
 
 uint32_t MidiDevice::NotePack(uint8_t note, uint8_t volume) {

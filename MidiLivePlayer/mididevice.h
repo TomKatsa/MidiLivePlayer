@@ -9,15 +9,17 @@ class MidiDevice {
 private:
 	MidiHandle deviceHandle;
 	uint8_t volume;
-	uint8_t duration;
+	uint32_t duration;
 	uint8_t channel;
 
-	void SetInstrument(uint8_t instrument);
+
+	uint32_t NotePack(uint8_t note, uint8_t volume);
 	void SendMidiMsg(uint32_t command);
 
 public:
-	MidiDevice(uint8_t volume = 127, uint8_t duration = 1000, 
+	MidiDevice(uint8_t volume = 127, uint32_t duration = 1000, 
 				uint8_t instrument = 0, uint8_t deviceId = 0);
+	void SetInstrument(uint8_t instrument);
 	void PlayNote(uint8_t note);
-	uint32_t NotePack(uint8_t note, uint8_t volume);
+	void PlayNoteAsync(uint8_t note);
 };
