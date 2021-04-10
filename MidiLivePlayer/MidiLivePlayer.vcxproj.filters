@@ -24,6 +24,9 @@
     <ClCompile Include="mididevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugprint.h">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="mididevice.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

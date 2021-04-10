@@ -18,10 +18,10 @@ void MidiDevice::PlayNote(uint8_t note) {
 	SendMidiMsg(NotePack(note, volume));
 	std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 	SendMidiMsg(NotePack(note, 0));
+	LOG("Played note " << static_cast<int>(note) << std::endl);
 }
 
 void MidiDevice::PlayNoteAsync(uint8_t note) {
-	LOG("Dispatching thread for PlayNoteAsync" << std::endl);
 	std::thread(&MidiDevice::PlayNote, this, note).detach();
 }
 
