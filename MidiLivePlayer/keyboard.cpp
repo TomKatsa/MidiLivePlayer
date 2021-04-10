@@ -42,7 +42,6 @@ LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 		PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
 		unsigned char key = p->vkCode;
 
-
 		std::lock_guard<std::mutex> lock(Keyboard::keysStateLock);
 
 		switch (wParam) {

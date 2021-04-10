@@ -34,20 +34,10 @@ int MessageLoop() {
     return msg.wParam;
 }
 
-void MainLoop() {
-    MidiDevice Accordion(22);
-    Keyboard keyboard(std::move(Accordion));
-    char c;
-
-    while ((c = _getch()) != 3) {
-        keyboard.PlayKeyOnce(c);
-    }
-}
-
 int main()
 {
     try {
-        MidiDevice Accordion(22);
+        MidiDevice Accordion(0);
         Keyboard keyboard(std::move(Accordion));
         MessageLoop();
     }
