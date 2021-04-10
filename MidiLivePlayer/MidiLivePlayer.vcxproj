@@ -158,6 +158,7 @@
     <ClInclude Include="exceptions.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="layout.h" />
     <ClInclude Include="mididevice.h" />
     <ClInclude Include="midihandle.h" />
   </ItemGroup>

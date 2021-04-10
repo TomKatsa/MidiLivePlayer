@@ -37,8 +37,7 @@ int MessageLoop() {
 int main()
 {
     try {
-        MidiDevice Accordion(0);
-        Keyboard keyboard(std::move(Accordion));
+        Keyboard keyboard(MidiDevice(0));
         MessageLoop();
     }
 

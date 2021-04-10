@@ -5,6 +5,7 @@
 #include <cassert>
 #include "keyboard.h"
 #include "debugprint.h"
+#include "layout.h"
 
 Keyboard* Keyboard::thisPointer = nullptr;
 std::vector<bool> Keyboard::keysState(256, false);
@@ -12,7 +13,7 @@ std::mutex Keyboard::keysStateLock;
 
 Keyboard::Keyboard(MidiDevice midiDevice, note_t base)
 	: midiDevice(std::move(midiDevice)), base(base), 
-	keys(256, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc) {
+	keys(256, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout) {
 
 	RebaseKeyboard(base);
 	thisPointer = this;
