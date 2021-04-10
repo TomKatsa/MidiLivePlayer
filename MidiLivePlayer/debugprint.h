@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 #ifndef NDEBUG
 #define LOG(x) do { std::cerr << x; } while (0)

@@ -5,6 +5,7 @@
 #include <optional>
 #include "mididevice.h"
 #include "exceptions.h"
+#include "debugprint.h"
 
 MidiDevice::MidiDevice(uint8_t instrument, uint8_t deviceId, uint8_t volume,uint32_t duration)
 	: volume(volume), duration(duration), deviceHandle(deviceId), channel(0) {
@@ -29,6 +30,7 @@ void MidiDevice::PlayNoteOnceAsync(note_t note) {
 }
 
 void MidiDevice::NoteDown(note_t note) {
+	LOG("Pressing down note " << static_cast<int>(*note) << std::endl);
 	SendMidiMsg(NotePack(*note, volume));
 }
 

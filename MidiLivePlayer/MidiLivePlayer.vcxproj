@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="hook.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mididevice.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="debugprint.h" />
     <ClInclude Include="exceptions.h" />
+    <ClInclude Include="hook.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="mididevice.h" />
     <ClInclude Include="midihandle.h" />

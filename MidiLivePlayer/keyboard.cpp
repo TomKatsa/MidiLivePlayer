@@ -1,14 +1,23 @@
 #include <iostream>
 #include <optional>
+#include <thread>
+#include <chrono>
+#include <cassert>
 #include "keyboard.h"
 #include "debugprint.h"
 
 Keyboard* Keyboard::thisPointer = nullptr;
 
+Keyboard::Keyboard(MidiDevice midiDevice, note_t base)
+	: midiDevice(std::move(midiDevice)), base(base), 
+	  notes(128, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc) {
+
+	RebaseKeyboard(base);
+	thisPointer = this;
+}
+
 void Keyboard::RebaseKeyboard(note_t base) {
-	if (!base.has_value()) {
-		throw std::runtime_error("Base note value is empty");
-	}
+	assert(base.has_value());
 
 	unsigned int keyIndex = 0, noteValue = *base - 1;
 
@@ -23,19 +32,8 @@ void Keyboard::RebaseKeyboard(note_t base) {
 	}
 }
 
-void Keyboard::InstallHook() {
-	thisPointer = this;
-	HHOOK hookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, nullptr, 0);
-
-	if (hookHandle == NULL) {
-		throw std::runtime_error("Hook handle failed");
-	}
-
-	LOG("Installed keyboard hook");
-
-}
-
 LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
+	LOG("Entered KeyboardProc" << std::endl);
 	if (thisPointer == nullptr) {
 		throw std::runtime_error("this pointer is null");
 	}
@@ -44,11 +42,11 @@ LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 	{
 		PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
 
-		switch (wParam)
-		{
+		switch (wParam) {
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 			thisPointer->KeyDown(p->vkCode);
+			// std::this_thread::sleep_for(std::chrono::milliseconds(200));
 			break;
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
@@ -62,16 +60,7 @@ LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 }
 
 
-Keyboard::Keyboard(MidiDevice midiDevice, note_t base) 
-	: midiDevice(std::move(midiDevice)), base(base), notes(128, std::nullopt) {
 
-	RebaseKeyboard(base);
-	InstallHook();
-}
-
-Keyboard::~Keyboard() {
-
-}
 
 note_t Keyboard::GetNote(char key) {
 	return notes[key];
@@ -87,6 +76,7 @@ void Keyboard::PlayKeyOnce(char key) {
 }
 
 void Keyboard::KeyDown(char key) {
+	LOG("Received key " << key << std::endl);
 	midiDevice.NoteDown(GetNote(key));
 }
 
