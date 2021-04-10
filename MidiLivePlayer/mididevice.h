@@ -24,6 +24,9 @@ public:
 	MidiDevice(MidiDevice&&);
 	MidiHandle StealHandle();
 	void SetInstrument(uint8_t instrument);
-	void PlayNote(note_t note);
-	void PlayNoteAsync(note_t note);
+	void PlayNoteOnce(note_t note);
+	void PlayNoteOnceAsync(note_t note);
+	void NoteDown(note_t note);
+	void NoteUp(note_t note);
 };
+

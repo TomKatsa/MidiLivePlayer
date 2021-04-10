@@ -7,20 +7,39 @@
 #include "keyboard.h"
 #include "exceptions.h"
 
-void MainLoop() {
-    MidiDevice device(0);
-    Keyboard keyboard(std::move(device));
-    char c;
+// Code snippet from: https://en.wikipedia.org/wiki/Message_loop_in_Microsoft_Windows
+int MessageLoop() {
+    MSG msg;
+    BOOL bRet;
 
-    while ((c = _getch()) != 3) {
-        keyboard.PlayKey(c);
+    while (1)
+    {
+        bRet = GetMessage(&msg, NULL, 0, 0);
+
+        if (bRet > 0)  // (bRet > 0 indicates a message that must be processed.)
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        else if (bRet < 0)  // (bRet == -1 indicates an error.)
+        {
+            // Handle or log the error; possibly exit.
+            // ...
+        }
+        else  // (bRet == 0 indicates "exit program".)
+        {
+            break;
+        }
     }
+    return msg.wParam;
 }
 
 int main()
 {
     try {
-        MainLoop();
+        MidiDevice Accordion(0);
+        Keyboard keyboard(std::move(Accordion));
+        MessageLoop();
     }
 
     catch (const MidiException& e) {
