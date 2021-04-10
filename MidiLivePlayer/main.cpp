@@ -8,12 +8,12 @@
 #include "exceptions.h"
 
 void MainLoop() {
-    MidiDevice device(0);
-    Keyboard keyboard(std::move(device));
+    MidiDevice Accordion(22);
+    Keyboard keyboard(std::move(Accordion));
     char c;
 
     while ((c = _getch()) != 3) {
-        keyboard.PlayKey(c);
+        keyboard.PlayKeyOnce(c);
     }
 }
 
