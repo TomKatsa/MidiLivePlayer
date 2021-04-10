@@ -2,17 +2,20 @@
 
 #include <cstdint>
 #include <vector>
+#include "mididevice.h"
 
 class Keyboard {
 private:
-	std::vector<uint8_t> notes;
+	MidiDevice midiDevice;
+	note_t base;
+	std::vector<note_t> notes;
 	std::vector<char> keys { '1','q','2','w','3','e','4','r','5','t','6','y','7','u','8','i','9','o','0','p','-','[','=',']' };
-	uint8_t base;
 
-	void RebaseKeyboard(uint8_t base);
+	void RebaseKeyboard(note_t base);
 
 public:
-	Keyboard(uint8_t base = 60);
-	uint8_t GetNote(char key);
-	uint8_t operator[](char key);
+	Keyboard(MidiDevice midiDevice, note_t base = 60);
+	note_t GetNote(char key);
+	note_t operator[](char key);
+	void PlayKey(char key);
 };

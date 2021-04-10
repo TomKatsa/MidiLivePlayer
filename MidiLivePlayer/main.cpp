@@ -8,12 +8,12 @@
 #include "exceptions.h"
 
 void MainLoop() {
-    MidiDevice device;
-    Keyboard keyboard;
+    MidiDevice device(0);
+    Keyboard keyboard(std::move(device));
     char c;
 
     while ((c = _getch()) != 3) {
-        device.PlayNoteAsync(keyboard[c]);
+        keyboard.PlayKey(c);
     }
 }
 
@@ -23,12 +23,16 @@ int main()
         MainLoop();
     }
 
-    catch (MidiException e) {
-        std::cout << "Caught exception: " << e.ErrorString() << std::endl;
+    catch (const MidiException& e) {
+        std::cerr << "Caught MIDI exception: " << e.ErrorString() << std::endl;
+    }
+
+    catch (const std::exception& e) {
+        std::cerr << "Caught general exception: " << e.what() << std::endl;
     }
 
     catch (...) {
-        std::cerr << "Caught general exception" << std::endl;
+        std::cerr << "Caught unknown exception" << std::endl;
     }
 }
 

@@ -12,6 +12,10 @@ MidiHandle::MidiHandle(UINT deviceId) {
 }
 
 MidiHandle::~MidiHandle() {
+	if (this->device == nullptr) {
+		return;
+	}
+
 	if (midiOutReset(this->device) != MMSYSERR_NOERROR) {
 		LOG("[*] midiOutReset failed");
 	}
@@ -21,6 +25,15 @@ MidiHandle::~MidiHandle() {
 	}
 
 	LOG("MidiHandle destroyed" << std::endl);
+}
+
+MidiHandle::MidiHandle(MidiHandle&& otherHandle) : device(otherHandle.Release()) {};
+
+HMIDIOUT MidiHandle::Release() {
+	// Yield the handle and nullify this object's handle
+	HMIDIOUT temp = device;
+	device = nullptr;
+	return temp;
 }
 
 HMIDIOUT MidiHandle::getHandle() {

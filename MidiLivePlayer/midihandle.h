@@ -13,6 +13,9 @@ private:
 public:
 	MidiHandle(UINT deviceId = 0);
 	~MidiHandle();
+	MidiHandle(const MidiHandle&) = delete;
+	MidiHandle(MidiHandle&&);
+	HMIDIOUT Release();
 
 	HMIDIOUT getHandle();
 

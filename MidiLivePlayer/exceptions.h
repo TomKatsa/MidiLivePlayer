@@ -8,7 +8,7 @@ private:
 public:
 	MidiException(MMRESULT err = MMSYSERR_ERROR) : err(err) {};
 
-	std::string ErrorString() {
+	std::string ErrorString() const {
 		std::vector<char> buffer(256);
 
 		midiOutGetErrorTextA(err, buffer.data(), buffer.size());
