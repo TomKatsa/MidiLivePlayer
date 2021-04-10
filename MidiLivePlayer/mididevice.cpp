@@ -30,12 +30,16 @@ void MidiDevice::PlayNoteOnceAsync(note_t note) {
 }
 
 void MidiDevice::NoteDown(note_t note) {
-	LOG("Pressing down note " << static_cast<int>(*note) << std::endl);
-	SendMidiMsg(NotePack(*note, volume));
+	if (note.has_value()) {
+		LOG("Pressing down note " << static_cast<int>(*note) << std::endl);
+		SendMidiMsg(NotePack(*note, volume));
+	}
 }
 
 void MidiDevice::NoteUp(note_t note) {
-	SendMidiMsg(NotePack(*note, 0));
+	if (note.has_value()) {
+		SendMidiMsg(NotePack(*note, 0));
+	}
 }
 
 uint32_t MidiDevice::NotePack(uint8_t noteValue, uint8_t volume) {
