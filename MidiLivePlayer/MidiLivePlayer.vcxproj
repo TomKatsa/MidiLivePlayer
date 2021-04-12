@@ -152,6 +152,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mididevice.cpp" />
     <ClCompile Include="midihandle.cpp" />
+    <ClCompile Include="playable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugprint.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="layout.h" />
     <ClInclude Include="mididevice.h" />
     <ClInclude Include="midihandle.h" />
+    <ClInclude Include="playable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

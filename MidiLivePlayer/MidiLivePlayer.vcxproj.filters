@@ -30,6 +30,9 @@
     <ClCompile Include="hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="playable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugprint.h">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="layout.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playable.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
