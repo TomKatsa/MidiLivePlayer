@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <map>
 #include <mutex>
 #include "mididevice.h"
 #include "hook.h"
@@ -16,7 +17,7 @@ private:
 	static std::vector<bool> keysState;
 	static std::mutex keysStateLock;
 	// std::vector<char> layout { '1','q','2','w','3','e','4','r','5','t','6','y','7','u','8','i','9','o','0','p','-','[','=',']' };
-	const std::vector<unsigned char>& layout;
+	const std::map<unsigned char, note_t>& layout;
 
 	void RebaseKeyboard(note_t base);
 	static LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam);

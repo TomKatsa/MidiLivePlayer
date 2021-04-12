@@ -15,7 +15,7 @@ Keyboard::Keyboard(MidiDevice midiDevice, note_t base)
 	: midiDevice(std::move(midiDevice)), base(base), 
 	keys(256, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout) {
 
-	RebaseKeyboard(base);
+	// RebaseKeyboard(base);
 	thisPointer = this;
 }
 
@@ -30,8 +30,8 @@ void Keyboard::RebaseKeyboard(note_t base) {
 			keyIndex++;
 		}
 
-		LOG("[KEYBOARD] " << layout[keyIndex] << ": " << noteValue << std::endl);
-		keys[layout[keyIndex]] = noteValue;
+		// LOG("[KEYBOARD] " << layout[keyIndex] << ": " << noteValue << std::endl);
+		// keys[layout[keyIndex]] = noteValue;
 	}
 }
 
@@ -67,7 +67,12 @@ LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 }
 
 note_t Keyboard::GetNote(unsigned char key) {
-	return keys[key];
+	try {
+		return layout.at(key);
+	}
+	catch (std::out_of_range ex) {
+		return std::nullopt;
+	}
 }
 
 note_t Keyboard::operator[](unsigned char key)
