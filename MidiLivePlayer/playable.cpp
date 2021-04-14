@@ -9,3 +9,5 @@ void SingleNote::Down(MidiDevice& device) {
 void SingleNote::Up(MidiDevice& device) {
 	device.NoteUp(note);
 }
+
+Playable::Playable() {};

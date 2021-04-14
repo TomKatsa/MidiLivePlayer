@@ -12,13 +12,13 @@ public:
 
 };
 
-class SingleNote : Playable {
+class SingleNote : public Playable {
 private:
 	note_t note;
 
 public:
 	SingleNote(note_t note);
-	~SingleNote() = default;
+	virtual ~SingleNote() = default;
 	void Down(MidiDevice& device);
 	void Up(MidiDevice& device);
 };
