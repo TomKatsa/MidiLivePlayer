@@ -163,6 +163,7 @@
     <ClInclude Include="mididevice.h" />
     <ClInclude Include="midihandle.h" />
     <ClInclude Include="playable.h" />
+    <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

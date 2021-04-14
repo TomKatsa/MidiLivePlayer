@@ -5,31 +5,33 @@
 #include <optional>
 #include "mididevice.h"
 #include "playable.h"
+#include "utility.h"
+
+using namespace Playable;
 
 namespace Layout {
-
-	const std::map<unsigned char, std::shared_ptr<Playable>> layout
+	const std::map<unsigned char, std::shared_ptr<IPlayable>> layout
 	{
-		{'1', std::make_shared<SingleNote>(59)},
-		{'Q', std::make_shared<SingleNote>(60)},
-		{'2', std::make_shared<SingleNote>(61)},
-		{'W', std::make_shared<SingleNote>(62)},
-		{'3', std::make_shared<SingleNote>(63)},
-		{'E', std::make_shared<SingleNote>(64)},
-		{'4', std::make_shared<SingleNote>(std::nullopt)},
-		{'R', std::make_shared<SingleNote>(65)},
-		{'5', std::make_shared<SingleNote>(66)},
-		{'T', std::make_shared<SingleNote>(67)},
-		{'6', std::make_shared<SingleNote>(68)},
-		{'Y', std::make_shared<SingleNote>(69)},
-		{'7', std::make_shared<SingleNote>(70)},
-		{'U', std::make_shared<SingleNote>(71)},
-		{'8', std::make_shared<SingleNote>(std::nullopt)},
-		{'I', std::make_shared<SingleNote>(72)},
-		{'9', std::make_shared<SingleNote>(73)},
-		{'O', std::make_shared<SingleNote>(74)},
-		{'0', std::make_shared<SingleNote>(75)},
-		{'P', std::make_shared<SingleNote>(76)},
+		{'1', MinorChordPtr(59)},
+		{'Q', MinorChordPtr(60)},
+		{'2', MinorChordPtr(61)},
+		{'W', MinorChordPtr(62)},
+		{'3', MinorChordPtr(63)},
+		{'E', MinorChordPtr(64)},
+		{'4', BlankPtr()},
+		{'R', MinorChordPtr(65)},
+		{'5', MinorChordPtr(66)},
+		{'T', MinorChordPtr(67)},
+		{'6', MinorChordPtr(68)},
+		{'Y', MinorChordPtr(69)},
+		{'7', MinorChordPtr(70)},
+		{'U', MinorChordPtr(71)},
+		{'8', BlankPtr()},
+		{'I', MinorChordPtr(72)},
+		{'9', MinorChordPtr(73)},
+		{'O', MinorChordPtr(74)},
+		{'0', MinorChordPtr(75)},
+		{'P', MinorChordPtr(76)},
 	};
 	// const std::vector<unsigned char> layout{ '1','Q','2','W','3','E','4','R','5','T','6','Y','7','U','8','I','9','O','0','P','-','[','=',']' };
 

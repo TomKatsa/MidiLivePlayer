@@ -8,6 +8,8 @@
 #include "hook.h"
 #include "playable.h"
 
+using Playable::IPlayable;
+
 class Keyboard {
 private:
 	static Keyboard* thisPointer;
@@ -18,7 +20,7 @@ private:
 	static std::vector<bool> keysState;
 	static std::mutex keysStateLock;
 	// std::vector<char> layout { '1','q','2','w','3','e','4','r','5','t','6','y','7','u','8','i','9','o','0','p','-','[','=',']' };
-	const std::map<unsigned char, std::shared_ptr<Playable>>& layout;
+	const std::map<unsigned char, std::shared_ptr<IPlayable>>& layout;
 
 	void RebaseKeyboard(note_t base);
 	static LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam);
