@@ -11,27 +11,32 @@
 int MessageLoop() {
     MSG msg;
     BOOL bRet;
+    try {
+        while (1)
+        {
+            bRet = GetMessage(&msg, NULL, 0, 0);
 
-    while (1)
-    {
-        bRet = GetMessage(&msg, NULL, 0, 0);
-
-        if (bRet > 0)  // (bRet > 0 indicates a message that must be processed.)
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (bRet > 0)  // (bRet > 0 indicates a message that must be processed.)
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+            else if (bRet < 0)  // (bRet == -1 indicates an error.)
+            {
+                // Handle or log the error; possibly exit.
+                // ...
+            }
+            else  // (bRet == 0 indicates "exit program".)
+            {
+                break;
+            }
         }
-        else if (bRet < 0)  // (bRet == -1 indicates an error.)
-        {
-            // Handle or log the error; possibly exit.
-            // ...
-        }
-        else  // (bRet == 0 indicates "exit program".)
-        {
-            break;
-        }
+        return msg.wParam;
     }
-    return msg.wParam;
+
+    catch (...) {
+        std::cout << "Exception!\n";
+    }
 }
 
 int main()

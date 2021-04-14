@@ -35,31 +35,39 @@ void Keyboard::RebaseKeyboard(note_t base) {
 	}
 }
 
-LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 	assert(thisPointer);
+	try {
+		if (code == HC_ACTION)
+		{
+			PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
+			unsigned char key = p->vkCode;
 
-	if (code == HC_ACTION)
-	{
-		PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
-		unsigned char key = p->vkCode;
+			std::lock_guard<std::mutex> lock(Keyboard::keysStateLock);
 
-		std::lock_guard<std::mutex> lock(Keyboard::keysStateLock);
+			switch (wParam) {
+			case WM_KEYDOWN:
+			case WM_SYSKEYDOWN:
+				if (!thisPointer->keysState[key]) {
+					keysState[key] = true;
+					thisPointer->KeyDown(p->vkCode);
+				}
+				break;
 
-		switch (wParam) {
-		case WM_KEYDOWN:
-		case WM_SYSKEYDOWN:
-			if (!thisPointer->keysState[key]) {
-				keysState[key] = true;
-				thisPointer->KeyDown(p->vkCode);
+			case WM_KEYUP:
+			case WM_SYSKEYUP:
+				keysState[key] = false;
+				thisPointer->KeyUp(p->vkCode);
+				break;
 			}
-			break;
-
-		case WM_KEYUP:
-		case WM_SYSKEYUP:
-			keysState[key] = false;
-			thisPointer->KeyUp(p->vkCode);
-			break;
 		}
+	}
+	catch (std::out_of_range ex) {
+		
+	}
+	catch (...) {
+		LOG("Received unknown exception, aborting" << std::endl);
+		abort();
 	}
 
 	// Not processing keys so always return CallNextHookEx
@@ -67,12 +75,7 @@ LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 }
 
 note_t Keyboard::GetNote(unsigned char key) {
-	try {
-		return layout.at(key);
-	}
-	catch (std::out_of_range ex) {
-		return std::nullopt;
-	}
+	throw std::runtime_error("Not implemented");
 }
 
 note_t Keyboard::operator[](unsigned char key)
@@ -81,13 +84,14 @@ note_t Keyboard::operator[](unsigned char key)
 }
 
 void Keyboard::PlayKeyOnce(unsigned char key) {
-	midiDevice.PlayNoteOnceAsync(GetNote(key));
+	// midiDevice.PlayNoteOnceAsync(GetNote(key));
+	throw std::runtime_error("PlayKeyOnce not implemented");
 }
 
 void Keyboard::KeyDown(unsigned char key) {
-	midiDevice.NoteDown(GetNote(key));
+	layout.at(key)->Down(midiDevice);
 }
 
 void Keyboard::KeyUp(unsigned char key) {
-	midiDevice.NoteUp(GetNote(key));
+	layout.at(key)->Up(midiDevice);
 }
