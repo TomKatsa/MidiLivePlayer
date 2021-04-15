@@ -10,7 +10,7 @@ Hook::Hook(int idHook, HOOKPROC callback) : hookHandle(nullptr) {
 		throw std::runtime_error("Hook set failed");
 	}
 
-	LOG("Installed keyboard hook " << hookHandle << std::endl);
+	LOG("Installed hook " << hookHandle << std::endl);
 }
 
 Hook::~Hook() {

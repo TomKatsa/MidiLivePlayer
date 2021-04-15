@@ -9,30 +9,75 @@
 
 using namespace Playable;
 
+enum BaseNotes {
+	C = 60, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
+};
+
 namespace Layout {
-	const std::map<unsigned char, std::shared_ptr<IPlayable>> layout
+	const std::map<unsigned char, std::shared_ptr<IPlayable>> layoutPiano
 	{
-		{'1', MinorChordPtr(59)},
-		{'Q', MinorChordPtr(60)},
-		{'2', MinorChordPtr(61)},
-		{'W', MinorChordPtr(62)},
-		{'3', MinorChordPtr(63)},
-		{'E', MinorChordPtr(64)},
+		{'1', SingleNotePtr(59)},
+		{'Q', SingleNotePtr(60)},
+		{'2', SingleNotePtr(61)},
+		{'W', SingleNotePtr(62)},
+		{'3', SingleNotePtr(63)},
+		{'E', SingleNotePtr(64)},
 		{'4', BlankPtr()},
-		{'R', MinorChordPtr(65)},
-		{'5', MinorChordPtr(66)},
-		{'T', MinorChordPtr(67)},
-		{'6', MinorChordPtr(68)},
-		{'Y', MinorChordPtr(69)},
-		{'7', MinorChordPtr(70)},
-		{'U', MinorChordPtr(71)},
+		{'R', SingleNotePtr(65)},
+		{'5', SingleNotePtr(66)},
+		{'T', SingleNotePtr(67)},
+		{'6', SingleNotePtr(68)},
+		{'Y', SingleNotePtr(69)},
+		{'7', SingleNotePtr(70)},
+		{'U', SingleNotePtr(71)},
 		{'8', BlankPtr()},
-		{'I', MinorChordPtr(72)},
-		{'9', MinorChordPtr(73)},
-		{'O', MinorChordPtr(74)},
-		{'0', MinorChordPtr(75)},
-		{'P', MinorChordPtr(76)},
+		{'I', SingleNotePtr(72)},
+		{'9', SingleNotePtr(73)},
+		{'O', SingleNotePtr(74)},
+		{'0', SingleNotePtr(75)},
+		{'P', SingleNotePtr(76)},
 	};
+
+	const std::map<unsigned char, std::shared_ptr<IPlayable>> layoutAccordion{
+		{'Q', SingleNotePtr(F)},
+		{'A', MajorChordPtr(F)},
+		{'Z', MinorChordPtr(F)},
+
+		{'W', SingleNotePtr(C)},
+		{'S', MajorChordPtr(C)},
+		{'X', MinorChordPtr(C)},
+
+		{'E', SingleNotePtr(G)},
+		{'D', MajorChordPtr(G)},
+		{'C', MinorChordPtr(G)},
+
+		{'R', SingleNotePtr(D)},
+		{'F', MajorChordPtr(D)},
+		{'V', MinorChordPtr(D)},
+
+		{'T', SingleNotePtr(A - 12)},
+		{'G', MajorChordPtr(A - 12)},
+		{'B', MinorChordPtr(A - 12)},
+
+		{'Y', SingleNotePtr(E)},
+		{'H', MajorChordPtr(E)},
+		{'N', MinorChordPtr(E)},
+
+		{'U', SingleNotePtr(B - 12)},
+		{'J', MajorChordPtr(B - 12)},
+		{'M', MinorChordPtr(B - 12)},
+
+		{'I', SingleNotePtr(Gb)},
+		{'K', MajorChordPtr(Gb)},
+		{VK_OEM_COMMA, MinorChordPtr(Gb)},
+
+		{'0', SingleNotePtr(Db)},
+		{'0', MajorChordPtr(Db)},
+		{'0', MinorChordPtr(66)},
+
+	};
+
+	auto layout = layoutPiano;
 	// const std::vector<unsigned char> layout{ '1','Q','2','W','3','E','4','R','5','T','6','Y','7','U','8','I','9','O','0','P','-','[','=',']' };
 
 };

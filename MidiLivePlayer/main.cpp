@@ -11,38 +11,33 @@
 int MessageLoop() {
     MSG msg;
     BOOL bRet;
-    try {
-        while (1)
+    while (1)
+    {
+        bRet = GetMessage(&msg, NULL, 0, 0);
+
+        if (bRet > 0)  // (bRet > 0 indicates a message that must be processed.)
         {
-            bRet = GetMessage(&msg, NULL, 0, 0);
-
-            if (bRet > 0)  // (bRet > 0 indicates a message that must be processed.)
-            {
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
-            else if (bRet < 0)  // (bRet == -1 indicates an error.)
-            {
-                // Handle or log the error; possibly exit.
-                // ...
-            }
-            else  // (bRet == 0 indicates "exit program".)
-            {
-                break;
-            }
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
         }
-        return msg.wParam;
+        else if (bRet < 0)  // (bRet == -1 indicates an error.)
+        {
+            // Handle or log the error; possibly exit.
+            // ...
+        }
+        else  // (bRet == 0 indicates "exit program".)
+        {
+            break;
+        }
     }
 
-    catch (...) {
-        std::cout << "Exception!\n";
-    }
+    return msg.wParam;
 }
 
 int main()
 {
     try {
-        Keyboard keyboard(MidiDevice(0));
+        Keyboard keyboard(MidiDevice(22));
         MessageLoop();
     }
 

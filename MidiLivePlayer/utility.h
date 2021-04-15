@@ -7,7 +7,7 @@ auto MinorChordPtr(note_t base) {
 }
 
 auto MajorChordPtr(note_t base) {
-	return std::make_shared<Playable::Chord>(Playable::Chord::MinorChord(base));
+	return std::make_shared<Playable::Chord>(Playable::Chord::MajorChord(base));
 }
 
 auto SingleNotePtr(note_t note) {
