@@ -5,14 +5,14 @@ using namespace Playable;
 
 IPlayable::IPlayable() {};
 
-SingleNote::SingleNote(note_t note) : note(note) {}
+SingleNote::SingleNote(note_t note, int channel) : note(note), channel(channel) {}
 
 void SingleNote::Down(MidiDevice& device) {
-	device.NoteDown(note);
+	device.NoteDown(note, channel);
 }
 
 void SingleNote::Up(MidiDevice& device) {
-	device.NoteUp(note);
+	device.NoteUp(note, channel);
 }
 
 Chord::Chord(std::vector<note_t> notes) : notes(notes) {}

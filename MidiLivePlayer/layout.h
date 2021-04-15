@@ -110,16 +110,16 @@ namespace Layout {
 	{'K', MajorChordPtr(Gb)},
 	{VK_OEM_COMMA, MinorChordPtr(Gb)},
 
-	{'1', SingleNotePtr(C)},
-	{'2', SingleNotePtr(D)},
-	{'3', SingleNotePtr(E)},
-	{'4', SingleNotePtr(F)},
-	{'5', SingleNotePtr(G)},
-	{'6', SingleNotePtr(A)},
-	{'7', SingleNotePtr(B)},
-	{'8', SingleNotePtr(C + 12)},
-	{'9', SingleNotePtr(D + 12)},
-	{'0', SingleNotePtr(E + 12)},
+	{'1', SingleNotePtr(C, 1)},
+	{'2', SingleNotePtr(D, 1)},
+	{'3', SingleNotePtr(E, 1)},
+	{'4', SingleNotePtr(F, 1)},
+	{'5', SingleNotePtr(G, 1)},
+	{'6', SingleNotePtr(A, 1)},
+	{'7', SingleNotePtr(B, 1)},
+	{'8', SingleNotePtr(C + 12, 1)},
+	{'9', SingleNotePtr(D + 12, 1)},
+	{'0', SingleNotePtr(E + 12, 1)},
 
 	};
 
