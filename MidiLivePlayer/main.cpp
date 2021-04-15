@@ -11,7 +11,6 @@
 int MessageLoop() {
     MSG msg;
     BOOL bRet;
-
     while (1)
     {
         bRet = GetMessage(&msg, NULL, 0, 0);
@@ -31,14 +30,14 @@ int MessageLoop() {
             break;
         }
     }
+
     return msg.wParam;
 }
 
 int main()
 {
     try {
-        MidiDevice Accordion(0);
-        Keyboard keyboard(std::move(Accordion));
+        Keyboard keyboard(MidiDevice(22));
         MessageLoop();
     }
 

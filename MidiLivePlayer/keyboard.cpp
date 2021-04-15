@@ -5,6 +5,7 @@
 #include <cassert>
 #include "keyboard.h"
 #include "debugprint.h"
+#include "layout.h"
 
 Keyboard* Keyboard::thisPointer = nullptr;
 std::vector<bool> Keyboard::keysState(256, false);
@@ -12,9 +13,9 @@ std::mutex Keyboard::keysStateLock;
 
 Keyboard::Keyboard(MidiDevice midiDevice, note_t base)
 	: midiDevice(std::move(midiDevice)), base(base), 
-	keys(256, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc) {
+	keys(256, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout) {
 
-	RebaseKeyboard(base);
+	// RebaseKeyboard(base);
 	thisPointer = this;
 }
 
@@ -29,36 +30,44 @@ void Keyboard::RebaseKeyboard(note_t base) {
 			keyIndex++;
 		}
 
-		LOG("[KEYBOARD] " << layout[keyIndex] << ": " << noteValue << std::endl);
-		keys[layout[keyIndex]] = noteValue;
+		// LOG("[KEYBOARD] " << layout[keyIndex] << ": " << noteValue << std::endl);
+		// keys[layout[keyIndex]] = noteValue;
 	}
 }
 
-LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 	assert(thisPointer);
+	try {
+		if (code == HC_ACTION)
+		{
+			PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
+			unsigned char key = p->vkCode;
 
-	if (code == HC_ACTION)
-	{
-		PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
-		unsigned char key = p->vkCode;
+			std::lock_guard<std::mutex> lock(Keyboard::keysStateLock);
 
-		std::lock_guard<std::mutex> lock(Keyboard::keysStateLock);
+			switch (wParam) {
+			case WM_KEYDOWN:
+			case WM_SYSKEYDOWN:
+				if (!thisPointer->keysState[key]) {
+					keysState[key] = true;
+					thisPointer->KeyDown(p->vkCode);
+				}
+				break;
 
-		switch (wParam) {
-		case WM_KEYDOWN:
-		case WM_SYSKEYDOWN:
-			if (!thisPointer->keysState[key]) {
-				keysState[key] = true;
-				thisPointer->KeyDown(p->vkCode);
+			case WM_KEYUP:
+			case WM_SYSKEYUP:
+				keysState[key] = false;
+				thisPointer->KeyUp(p->vkCode);
+				break;
 			}
-			break;
-
-		case WM_KEYUP:
-		case WM_SYSKEYUP:
-			keysState[key] = false;
-			thisPointer->KeyUp(p->vkCode);
-			break;
 		}
+	}
+	catch (std::out_of_range ex) {
+		
+	}
+	catch (...) {
+		LOG("Received unknown exception, aborting" << std::endl);
+		abort();
 	}
 
 	// Not processing keys so always return CallNextHookEx
@@ -66,7 +75,7 @@ LRESULT Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 }
 
 note_t Keyboard::GetNote(unsigned char key) {
-	return keys[key];
+	throw std::runtime_error("Not implemented");
 }
 
 note_t Keyboard::operator[](unsigned char key)
@@ -75,13 +84,14 @@ note_t Keyboard::operator[](unsigned char key)
 }
 
 void Keyboard::PlayKeyOnce(unsigned char key) {
-	midiDevice.PlayNoteOnceAsync(GetNote(key));
+	// midiDevice.PlayNoteOnceAsync(GetNote(key));
+	throw std::runtime_error("PlayKeyOnce not implemented");
 }
 
 void Keyboard::KeyDown(unsigned char key) {
-	midiDevice.NoteDown(GetNote(key));
+	layout.at(key)->Down(midiDevice);
 }
 
 void Keyboard::KeyUp(unsigned char key) {
-	midiDevice.NoteUp(GetNote(key));
+	layout.at(key)->Up(midiDevice);
 }

@@ -2,9 +2,13 @@
 
 #include <cstdint>
 #include <vector>
+#include <map>
 #include <mutex>
 #include "mididevice.h"
 #include "hook.h"
+#include "playable.h"
+
+using Playable::IPlayable;
 
 class Keyboard {
 private:
@@ -16,7 +20,7 @@ private:
 	static std::vector<bool> keysState;
 	static std::mutex keysStateLock;
 	// std::vector<char> layout { '1','q','2','w','3','e','4','r','5','t','6','y','7','u','8','i','9','o','0','p','-','[','=',']' };
-	std::vector<char> layout { '1','Q','2','W','3','E','4','R','5','T','6','Y','7','U','8','I','9','O','0','P','-','[','=',']' };
+	const std::map<unsigned char, std::shared_ptr<IPlayable>>& layout;
 
 	void RebaseKeyboard(note_t base);
 	static LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam);
