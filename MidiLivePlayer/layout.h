@@ -113,13 +113,19 @@ namespace Layout {
 	{'1', SingleNotePtr(C, 1)},
 	{'2', SingleNotePtr(D, 1)},
 	{'3', SingleNotePtr(E, 1)},
+	{VK_F2, SingleNotePtr(Eb, 1)},
 	{'4', SingleNotePtr(F, 1)},
+	{VK_F4, SingleNotePtr(Gb, 1)},
 	{'5', SingleNotePtr(G, 1)},
 	{'6', SingleNotePtr(A, 1)},
 	{'7', SingleNotePtr(B, 1)},
 	{'8', SingleNotePtr(C + 12, 1)},
 	{'9', SingleNotePtr(D + 12, 1)},
 	{'0', SingleNotePtr(E + 12, 1)},
+	{VK_OEM_MINUS, SingleNotePtr(F + 12, 1)},
+	{VK_OEM_PLUS, SingleNotePtr(G + 12, 1)},
+
+
 
 	};
 
