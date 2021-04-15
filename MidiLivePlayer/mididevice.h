@@ -1,17 +1,32 @@
 #pragma once
 
-#include <Windows.h>
-#include <mmsystem.h>
-#include <iostream>
-#include "debugprint.h"
+#include <cstdint>
+#include <optional>
+#include "midihandle.h"
+
+typedef std::optional<uint8_t> note_t;
 
 class MidiDevice {
-
 private:
-	HMIDIOUT device;
+	MidiHandle deviceHandle;
+	uint8_t volume;
+	uint32_t duration;
+	uint8_t channel;
+
+
+	uint32_t NotePack(uint8_t noteValue, uint8_t volume);
+	void SendMidiMsg(uint32_t command);
 
 public:
-	MidiDevice(UINT deviceId = 0);
-	~MidiDevice();
-
+	MidiDevice(uint8_t instrument = 0, uint8_t deviceId = 0, 
+				uint8_t volume = 127, uint32_t duration = 1000);
+	MidiDevice(const MidiDevice&) = delete;
+	MidiDevice(MidiDevice&&);
+	MidiHandle StealHandle();
+	void SetInstrument(uint8_t instrument);
+	void PlayNoteOnce(note_t note);
+	void PlayNoteOnceAsync(note_t note);
+	void NoteDown(note_t note);
+	void NoteUp(note_t note);
 };
+

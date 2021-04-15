@@ -1,24 +1,75 @@
+#include <Windows.h>
+#include <chrono>
+#include <thread>
+#include <future>
+#include <optional>
 #include "mididevice.h"
 #include "exceptions.h"
+#include "debugprint.h"
 
-MidiDevice::MidiDevice(UINT deviceId) {
-	MMRESULT err = midiOutOpen(&this->device, deviceId, NULL, 0, CALLBACK_NULL);
+MidiDevice::MidiDevice(uint8_t instrument, uint8_t deviceId, uint8_t volume,uint32_t duration)
+	: volume(volume), duration(duration), deviceHandle(deviceId), channel(0) {
+
+	SetInstrument(instrument);
+	LOG("MidiDevice created " << this << std::endl);
+}
+
+void MidiDevice::PlayNoteOnce(note_t note) {
+	if (!note.has_value()) {
+		return;
+	}
+
+	NoteDown(note);
+	std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+	NoteUp(note);
+	LOG("Played single note " << static_cast<int>(*note) << std::endl);
+}
+
+void MidiDevice::PlayNoteOnceAsync(note_t note) {
+	std::thread(&MidiDevice::PlayNoteOnce, this, note).detach();
+}
+
+void MidiDevice::NoteDown(note_t note) {
+	if (note.has_value()) {
+		LOG("Pressing down note " << static_cast<int>(*note) << std::endl);
+		SendMidiMsg(NotePack(*note, volume));
+	}
+}
+
+void MidiDevice::NoteUp(note_t note) {
+	if (note.has_value()) {
+		SendMidiMsg(NotePack(*note, 0));
+	}
+}
+
+uint32_t MidiDevice::NotePack(uint8_t noteValue, uint8_t volume) {
+	uint32_t command = 0x90;
+	command |= channel;
+	command |= (noteValue << 8);
+	command |= (volume << 16);
+
+	return command;
+}
+
+MidiDevice::MidiDevice(MidiDevice&& device)
+	: deviceHandle(device.StealHandle()), volume(device.volume), duration(device.duration),
+	channel(device.channel) {}
+
+MidiHandle MidiDevice::StealHandle()
+{
+	return std::move(deviceHandle);
+}
+
+void MidiDevice::SetInstrument(uint8_t instrument) {
+		uint32_t command = (0x000000C0 | channel) | (instrument << 8);
+		SendMidiMsg(command);
+}
+
+void MidiDevice::SendMidiMsg(uint32_t command) {
+	MMRESULT err =  midiOutShortMsg(deviceHandle.getHandle(), command);
 
 	if (err != MMSYSERR_NOERROR) {
-		throw MidiDeviceException(err);
+		throw MidiException(err);
 	}
-
-	PRINT("MidiDevice created" << std::endl);
 }
 
-MidiDevice::~MidiDevice() {
-	if (midiOutReset(this->device) != MMSYSERR_NOERROR) {
-		PRINT("[*] midiOutReset failed");
-	}
-
-	if (midiOutClose(this->device) != MMSYSERR_NOERROR) {
-		PRINT("[*] midiOutReset failed");
-	}
-
-	PRINT("MidiDevice destroyed" << std::endl);
-}

@@ -18,18 +18,48 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="midihandle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="mididevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mididevice.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="debugprint.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="exceptions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midihandle.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mididevice.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hook.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="layout.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
