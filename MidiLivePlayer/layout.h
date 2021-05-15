@@ -110,6 +110,10 @@ namespace Layout {
 	{'K', MajorChordPtr(Gb)},
 	{VK_OEM_COMMA, MinorChordPtr(Gb)},
 
+	{'O', SingleNotePtr(Db)},
+	{'L', MajorChordPtr(Db)},
+	{VK_OEM_PERIOD, MinorChordPtr(Db)},
+
 	{'1', SingleNotePtr(C, 1)},
 	{'2', SingleNotePtr(D, 1)},
 	{'3', SingleNotePtr(E, 1)},
@@ -129,7 +133,7 @@ namespace Layout {
 
 	};
 
-	auto layout = layoutCombined;
+	auto layout = layoutPiano;
 	// const std::vector<unsigned char> layout{ '1','Q','2','W','3','E','4','R','5','T','6','Y','7','U','8','I','9','O','0','P','-','[','=',']' };
 
 };
