@@ -19,22 +19,6 @@ Keyboard::Keyboard(MidiDevice midiDevice, note_t base)
 	thisPointer = this;
 }
 
-void Keyboard::RebaseKeyboard(note_t base) {
-	assert(base.has_value());
-
-	unsigned int keyIndex = 0, noteValue = *base - 1;
-
-	for (keyIndex, noteValue; keyIndex < layout.size(); keyIndex++, noteValue++) {
-		if (keyIndex % 2 == 0 && (noteValue % 12 == 0 || noteValue % 12 == 5)) {
-			// Skip a key
-			keyIndex++;
-		}
-
-		// LOG("[KEYBOARD] " << layout[keyIndex] << ": " << noteValue << std::endl);
-		// keys[layout[keyIndex]] = noteValue;
-	}
-}
-
 LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 	assert(thisPointer);
 	try {
@@ -72,20 +56,6 @@ LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) 
 
 	// Not processing keys so always return CallNextHookEx
 	return(CallNextHookEx(NULL, code, wParam, lParam));
-}
-
-note_t Keyboard::GetNote(unsigned char key) {
-	throw std::runtime_error("Not implemented");
-}
-
-note_t Keyboard::operator[](unsigned char key)
-{
-	return GetNote(key);
-}
-
-void Keyboard::PlayKeyOnce(unsigned char key) {
-	// midiDevice.PlayNoteOnceAsync(GetNote(key));
-	throw std::runtime_error("PlayKeyOnce not implemented");
 }
 
 void Keyboard::KeyDown(unsigned char key) {

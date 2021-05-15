@@ -77,6 +77,62 @@ namespace Layout {
 
 	};
 
+	const std::map<unsigned char, std::shared_ptr<IPlayable>> layoutCombined{
+	{'Q', SingleNotePtr(F)},
+	{'A', MajorChordPtr(F)},
+	{'Z', MinorChordPtr(F)},
+
+	{'W', SingleNotePtr(C)},
+	{'S', MajorChordPtr(C)},
+	{'X', MinorChordPtr(C)},
+
+	{'E', SingleNotePtr(G)},
+	{'D', MajorChordPtr(G)},
+	{'C', MinorChordPtr(G)},
+
+	{'R', SingleNotePtr(D)},
+	{'F', MajorChordPtr(D)},
+	{'V', MinorChordPtr(D)},
+
+	{'T', SingleNotePtr(A - 12)},
+	{'G', MajorChordPtr(A - 12)},
+	{'B', MinorChordPtr(A - 12)},
+
+	{'Y', SingleNotePtr(E)},
+	{'H', MajorChordPtr(E)},
+	{'N', MinorChordPtr(E)},
+
+	{'U', SingleNotePtr(B - 12)},
+	{'J', MajorChordPtr(B - 12)},
+	{'M', MinorChordPtr(B - 12)},
+
+	{'I', SingleNotePtr(Gb)},
+	{'K', MajorChordPtr(Gb)},
+	{VK_OEM_COMMA, MinorChordPtr(Gb)},
+
+	{'O', SingleNotePtr(Db)},
+	{'L', MajorChordPtr(Db)},
+	{VK_OEM_PERIOD, MinorChordPtr(Db)},
+
+	{'1', SingleNotePtr(C, 1)},
+	{'2', SingleNotePtr(D, 1)},
+	{'3', SingleNotePtr(E, 1)},
+	{VK_F2, SingleNotePtr(Eb, 1)},
+	{'4', SingleNotePtr(F, 1)},
+	{VK_F4, SingleNotePtr(Gb, 1)},
+	{'5', SingleNotePtr(G, 1)},
+	{'6', SingleNotePtr(A, 1)},
+	{'7', SingleNotePtr(B, 1)},
+	{'8', SingleNotePtr(C + 12, 1)},
+	{'9', SingleNotePtr(D + 12, 1)},
+	{'0', SingleNotePtr(E + 12, 1)},
+	{VK_OEM_MINUS, SingleNotePtr(F + 12, 1)},
+	{VK_OEM_PLUS, SingleNotePtr(G + 12, 1)},
+
+
+
+	};
+
 	auto layout = layoutPiano;
 	// const std::vector<unsigned char> layout{ '1','Q','2','W','3','E','4','R','5','T','6','Y','7','U','8','I','9','O','0','P','-','[','=',']' };
 

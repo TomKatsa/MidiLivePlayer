@@ -11,10 +11,9 @@ private:
 	MidiHandle deviceHandle;
 	uint8_t volume;
 	uint32_t duration;
-	uint8_t channel;
 
 
-	uint32_t NotePack(uint8_t noteValue, uint8_t volume);
+	uint32_t NotePack(uint8_t noteValue, uint8_t volume, uint8_t channel = 0);
 	void SendMidiMsg(uint32_t command);
 
 public:
@@ -23,10 +22,10 @@ public:
 	MidiDevice(const MidiDevice&) = delete;
 	MidiDevice(MidiDevice&&);
 	MidiHandle StealHandle();
-	void SetInstrument(uint8_t instrument);
+	void SetInstrument(uint8_t instrument, uint8_t channel = 0);
 	void PlayNoteOnce(note_t note);
 	void PlayNoteOnceAsync(note_t note);
-	void NoteDown(note_t note);
-	void NoteUp(note_t note);
+	void NoteDown(note_t note, int channel = 0);
+	void NoteUp(note_t note, int channel = 0);
 };
 

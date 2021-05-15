@@ -37,7 +37,9 @@ int MessageLoop() {
 int main()
 {
     try {
-        Keyboard keyboard(MidiDevice(22));
+        MidiDevice device(22);
+        device.SetInstrument(22, 1);
+        Keyboard keyboard(std::move(device));
         MessageLoop();
     }
 

@@ -8,7 +8,7 @@
 #include "debugprint.h"
 
 MidiDevice::MidiDevice(uint8_t instrument, uint8_t deviceId, uint8_t volume,uint32_t duration)
-	: volume(volume), duration(duration), deviceHandle(deviceId), channel(0) {
+	: volume(volume), duration(duration), deviceHandle(deviceId) {
 
 	SetInstrument(instrument);
 	LOG("MidiDevice created " << this << std::endl);
@@ -29,20 +29,20 @@ void MidiDevice::PlayNoteOnceAsync(note_t note) {
 	std::thread(&MidiDevice::PlayNoteOnce, this, note).detach();
 }
 
-void MidiDevice::NoteDown(note_t note) {
+void MidiDevice::NoteDown(note_t note, int channel) {
 	if (note.has_value()) {
 		LOG("Pressing down note " << static_cast<int>(*note) << std::endl);
-		SendMidiMsg(NotePack(*note, volume));
+		SendMidiMsg(NotePack(*note, volume, channel));
 	}
 }
 
-void MidiDevice::NoteUp(note_t note) {
+void MidiDevice::NoteUp(note_t note, int channel) {
 	if (note.has_value()) {
-		SendMidiMsg(NotePack(*note, 0));
+		SendMidiMsg(NotePack(*note, 0, channel));
 	}
 }
 
-uint32_t MidiDevice::NotePack(uint8_t noteValue, uint8_t volume) {
+uint32_t MidiDevice::NotePack(uint8_t noteValue, uint8_t volume, uint8_t channel) {
 	uint32_t command = 0x90;
 	command |= channel;
 	command |= (noteValue << 8);
@@ -52,15 +52,14 @@ uint32_t MidiDevice::NotePack(uint8_t noteValue, uint8_t volume) {
 }
 
 MidiDevice::MidiDevice(MidiDevice&& device)
-	: deviceHandle(device.StealHandle()), volume(device.volume), duration(device.duration),
-	channel(device.channel) {}
+	: deviceHandle(device.StealHandle()), volume(device.volume), duration(device.duration) {}
 
 MidiHandle MidiDevice::StealHandle()
 {
 	return std::move(deviceHandle);
 }
 
-void MidiDevice::SetInstrument(uint8_t instrument) {
+void MidiDevice::SetInstrument(uint8_t instrument, uint8_t channel) {
 		uint32_t command = (0x000000C0 | channel) | (instrument << 8);
 		SendMidiMsg(command);
 }

@@ -17,10 +17,11 @@ namespace Playable {
 	class SingleNote : public IPlayable {
 	private:
 		note_t note;
+		int channel;
 
 	public:
 		SingleNote() = default;
-		SingleNote(note_t note);
+		SingleNote(note_t note, int channel = 0);
 		virtual ~SingleNote() = default;
 		void Down(MidiDevice& device);
 		void Up(MidiDevice& device);
