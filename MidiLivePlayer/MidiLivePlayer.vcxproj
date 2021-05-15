@@ -152,6 +152,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mididevice.cpp" />
     <ClCompile Include="midihandle.cpp" />
+    <ClCompile Include="midiplayer.cpp" />
     <ClCompile Include="playable.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="layout.h" />
     <ClInclude Include="mididevice.h" />
     <ClInclude Include="midihandle.h" />
+    <ClInclude Include="midiplayer.h" />
     <ClInclude Include="playable.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>
