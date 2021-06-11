@@ -26,7 +26,7 @@ private:
 	static LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam);
 
 public:
-	Keyboard(MidiDevice& midiDevice, note_t base = 60);
+	Keyboard(MidiDevice& midiDevice);
 	void KeyDown(unsigned char key);
 	void KeyUp(unsigned char key);
 };

@@ -11,19 +11,17 @@ Keyboard* Keyboard::thisPointer = nullptr;
 std::vector<bool> Keyboard::keysState(256, false);
 std::mutex Keyboard::keysStateLock;
 
-Keyboard::Keyboard(MidiDevice& midiDevice, note_t base)
-	: midiDevice(midiDevice), base(base), 
-	keys(256, std::nullopt), hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout) {
+Keyboard::Keyboard(MidiDevice& midiDevice)
+	: midiDevice(midiDevice), keys(256, std::nullopt), 
+	hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout) {
 
-	// RebaseKeyboard(base);
 	thisPointer = this;
 }
 
 LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) {
 	assert(thisPointer);
 	try {
-		if (code == HC_ACTION)
-		{
+		if (code == HC_ACTION) {
 			PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
 			unsigned char key = p->vkCode;
 
@@ -47,7 +45,7 @@ LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) 
 		}
 	}
 	catch (std::out_of_range ex) {
-		
+
 	}
 	catch (...) {
 		LOG("Received unknown exception, aborting" << std::endl);
