@@ -6,6 +6,7 @@
 #include "mididevice.h"
 #include "keyboard.h"
 #include "exceptions.h"
+#include "midiplayer.h"
 
 // Code snippet from: https://en.wikipedia.org/wiki/Message_loop_in_Microsoft_Windows
 int MessageLoop() {
@@ -37,9 +38,8 @@ int MessageLoop() {
 int main()
 {
     try {
-        MidiDevice device(22);
-        device.SetInstrument(22, 1);
-        Keyboard keyboard(std::move(device));
+        MidiPlayer player(22);
+        player.device.SetInstrument(22, 1);
         MessageLoop();
     }
 

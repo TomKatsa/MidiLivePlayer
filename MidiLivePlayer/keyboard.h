@@ -12,9 +12,10 @@ using Playable::IPlayable;
 
 class Keyboard {
 private:
+
 	static Keyboard* thisPointer;
 	Hook hookHandle;
-	MidiDevice midiDevice;
+	MidiDevice& midiDevice;
 	note_t base;
 	std::vector<note_t> keys;
 	static std::vector<bool> keysState;
@@ -25,7 +26,7 @@ private:
 	static LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam);
 
 public:
-	Keyboard(MidiDevice midiDevice, note_t base = 60);
+	Keyboard(MidiDevice& midiDevice);
 	void KeyDown(unsigned char key);
 	void KeyUp(unsigned char key);
 };
