@@ -10,5 +10,5 @@ public:
 	MidiDevice device;
 	Keyboard keyboard;
 
-	MidiPlayer(uint8_t instrument);
+	MidiPlayer(uint8_t instrument = 0);
 };

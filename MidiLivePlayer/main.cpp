@@ -35,11 +35,14 @@ int MessageLoop() {
     return msg.wParam;
 }
 
-int main()
-{
+int main(int argc, const char* argv[]) {
     try {
-        MidiPlayer player(22);
-        player.device.SetInstrument(22, 1);
+        MidiPlayer player;
+        // Each argument is the instrument for each channel
+        for (int i = 1; i < argc; i++) {
+            player.device.SetInstrument(std::stoi(argv[i]), i - 1);
+        }
+
         MessageLoop();
     }
 
