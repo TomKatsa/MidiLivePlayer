@@ -16,7 +16,7 @@ enum BaseNotes {
 LayoutDict MakeChromaticLayout(std::vector<unsigned char>, int base);
 
 namespace Layout {
-	const std::vector<unsigned char> chromaticUpperLayer{'1', 'Q', '2', 'W', '3', 'E', '4', 'R', '5', 'T', '6', 'Y', '7', 'U', '8', 'I', '9', 'O', '0', 'P' };
+	const std::vector<unsigned char> chromaticUpperLayer{'Q', '2', 'W', '3', 'E', '4', 'R', '5', 'T', '6', 'Y', '7', 'U', '8', 'I', '9', 'O', '0', 'P' };
 	const LayoutDict layoutPiano = MakeChromaticLayout(chromaticUpperLayer, 60);
 	/*
 	const LayoutDict layoutPiano
