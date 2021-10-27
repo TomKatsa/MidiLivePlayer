@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mididevice.h"
+#include <vector>
 
 namespace Playable {
 
