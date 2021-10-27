@@ -3,20 +3,22 @@
 #include <vector>
 #include <map>
 #include <optional>
-#include "mididevice.h"
-#include "playable.h"
 #include "utility.h"
 
 using namespace Playable;
+
 typedef std::map<unsigned char, std::shared_ptr<IPlayable>> LayoutDict;
 
 enum BaseNotes {
 	C = 60, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
 };
 
-LayoutDict MakeChromaticLayout(int base);
+LayoutDict MakeChromaticLayout(std::vector<unsigned char>, int base);
 
 namespace Layout {
+	const std::vector<unsigned char> chromaticUpperLayer{'1', 'Q', '2', 'W', '3', 'E', '4', 'R', '5', 'T', '6', 'Y', '7', 'U', '8', 'I', '9', 'O', '0', 'P' };
+	const LayoutDict layoutPiano = MakeChromaticLayout(chromaticUpperLayer, 60);
+	/*
 	const LayoutDict layoutPiano
 	{
 		{'1', SingleNotePtr(59)},
@@ -40,6 +42,7 @@ namespace Layout {
 		{'0', SingleNotePtr(75)},
 		{'P', SingleNotePtr(76)},
 	};
+	*/
 
 	const LayoutDict layoutAccordion{
 		{'Q', SingleNotePtr(F)},

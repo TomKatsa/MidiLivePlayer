@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="hook.cpp" />
     <ClCompile Include="keyboard.cpp" />
+    <ClCompile Include="layout.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mididevice.cpp" />
     <ClCompile Include="midihandle.cpp" />
