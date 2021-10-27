@@ -2,18 +2,10 @@
 
 #include "playable.h"
 
-auto MinorChordPtr(note_t base) {
-	return std::make_shared<Playable::Chord>(Playable::Chord::MinorChord(base));
-}
+std::shared_ptr<Playable::Chord> MinorChordPtr(note_t base);
 
-auto MajorChordPtr(note_t base) {
-	return std::make_shared<Playable::Chord>(Playable::Chord::MajorChord(base));
-}
+std::shared_ptr<Playable::Chord> MajorChordPtr(note_t base);
 
-auto SingleNotePtr(note_t note, int channel = 0) {
-	return std::make_shared<Playable::SingleNote>(note, channel);
-}
+std::shared_ptr<Playable::SingleNote> SingleNotePtr(note_t note, int channel = 0);
 
-auto BlankPtr() {
-	return std::make_shared<Playable::SingleNote>();
-}
+std::shared_ptr<Playable::SingleNote> BlankPtr();

@@ -149,11 +149,13 @@
   <ItemGroup>
     <ClCompile Include="hook.cpp" />
     <ClCompile Include="keyboard.cpp" />
+    <ClCompile Include="layout.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mididevice.cpp" />
     <ClCompile Include="midihandle.cpp" />
     <ClCompile Include="midiplayer.cpp" />
     <ClCompile Include="playable.cpp" />
+    <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugprint.h" />
