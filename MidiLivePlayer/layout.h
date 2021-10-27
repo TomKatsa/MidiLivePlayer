@@ -8,13 +8,16 @@
 #include "utility.h"
 
 using namespace Playable;
+typedef std::map<unsigned char, std::shared_ptr<IPlayable>> LayoutDict;
 
 enum BaseNotes {
 	C = 60, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
 };
 
+LayoutDict MakeChromaticLayout(int base);
+
 namespace Layout {
-	const std::map<unsigned char, std::shared_ptr<IPlayable>> layoutPiano
+	const LayoutDict layoutPiano
 	{
 		{'1', SingleNotePtr(59)},
 		{'Q', SingleNotePtr(60)},
@@ -38,7 +41,7 @@ namespace Layout {
 		{'P', SingleNotePtr(76)},
 	};
 
-	const std::map<unsigned char, std::shared_ptr<IPlayable>> layoutAccordion{
+	const LayoutDict layoutAccordion{
 		{'Q', SingleNotePtr(F)},
 		{'A', MajorChordPtr(F)},
 		{'Z', MinorChordPtr(F)},
@@ -77,7 +80,7 @@ namespace Layout {
 
 	};
 
-	const std::map<unsigned char, std::shared_ptr<IPlayable>> layoutCombined{
+	const LayoutDict layoutCombined{
 	{'Q', SingleNotePtr(F)},
 	{'A', MajorChordPtr(F)},
 	{'Z', MinorChordPtr(F)},
