@@ -1,5 +1,8 @@
 #pragma once
 
+/**
+ * @brief Wrapper to manage windows hooks.
+*/
 class Hook {
 private:
 	HHOOK hookHandle;
