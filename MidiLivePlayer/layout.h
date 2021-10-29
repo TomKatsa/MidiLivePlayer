@@ -13,6 +13,10 @@ enum BaseNotes {
 	C = 60, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
 };
 
+/**
+ * @brief Create a chromatic layout given vector of chars and a base note to start with.
+ * First note should be a 'white' note.
+*/
 LayoutDict MakeChromaticLayout(std::vector<unsigned char>, int base);
 
 namespace Layout {
