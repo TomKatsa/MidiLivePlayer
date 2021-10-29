@@ -5,6 +5,9 @@
 #include <iostream>
 #include "debugprint.h"
 
+/**
+ * @brief Wrapper class for a handle to a windows MIDI object. Managed with ctor and dtor
+*/
 class MidiHandle {
 
 private:

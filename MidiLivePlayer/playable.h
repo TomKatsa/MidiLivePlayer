@@ -5,6 +5,9 @@
 
 namespace Playable {
 
+	/**
+	 * @brief Interface for an object that can be played on a key press (up or down).
+	*/
 	class IPlayable {
 	public:
 		IPlayable();
@@ -14,7 +17,9 @@ namespace Playable {
 
 	};
 
-
+	/**
+	 * @brief Class for a single note playable object.
+	*/
 	class SingleNote : public IPlayable {
 	private:
 		note_t note;
@@ -28,7 +33,9 @@ namespace Playable {
 		void Up(MidiDevice& device);
 	};
 
-
+	/**
+	 * @brief Class for a multiple note playable object (3 notes that make up a chord).
+	*/
 	class Chord : public IPlayable {
 	private:
 		std::vector<note_t> notes;
@@ -39,6 +46,7 @@ namespace Playable {
 		virtual ~Chord() = default;
 		void Down(MidiDevice& device);
 		void Up(MidiDevice& device);
+		// Factory methods for creating a major or minor chords, given a root note.
 		static Chord MajorChord(note_t base);
 		static Chord MinorChord(note_t base);
 	};
