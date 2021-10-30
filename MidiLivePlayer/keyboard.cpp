@@ -13,7 +13,7 @@ std::mutex Keyboard::keysStateLock;
 
 Keyboard::Keyboard(MidiDevice& midiDevice)
 	: midiDevice(midiDevice), keys(256, std::nullopt), 
-	hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout) {
+	hookHandle(WH_KEYBOARD_LL, KeyboardProc), layout(Layout::layout), base(60) {
 
 	thisPointer = this;
 }
@@ -57,7 +57,22 @@ LRESULT CALLBACK Keyboard::KeyboardProc(int code, WPARAM wParam, LPARAM lParam) 
 }
 
 void Keyboard::KeyDown(unsigned char key) {
-	layout.at(key)->Down(midiDevice);
+	// Left arrow: regenerate layout with a lower base tone
+	if (key == VK_LEFT) {
+		LOG("Lowering base note to " << *base << std::endl);
+		*this->base -= 1;
+		this->layout = MakeChromaticLayout(Layout::chromaticUpperLayer, *base);
+	}
+	// Right arrow: regenerate layout with a higher base tone
+	else if (key == VK_RIGHT) {
+		LOG("Increasing base note to " << *base << std::endl);
+		*this->base += 1;
+		this->layout = MakeChromaticLayout(Layout::chromaticUpperLayer, *base);
+	}
+
+	else {
+		layout.at(key)->Down(midiDevice);
+	}
 }
 
 void Keyboard::KeyUp(unsigned char key) {
