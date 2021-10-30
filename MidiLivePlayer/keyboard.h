@@ -32,7 +32,7 @@ private:
 	static std::mutex keysStateLock;
 
 	// Map of keys and notes
-	const LayoutDict& layout;
+	LayoutDict layout;
 
 	/**
 	 * @brief Keyboard hook callback. Called every time a key is pressed down or released
